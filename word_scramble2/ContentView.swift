@@ -47,6 +47,19 @@ struct ContentView: View {
     func addNewWord(){
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         guard answer.count > 0 else { return }
+        // extra validation to come
+        guard isOriginal(word: answer) else {
+            wordError(title: "word used already", message: "be more original")
+            return
+        }
+        guard isPossible(word: answer) else {
+            wordError(title: "word not possible", message: "you cant spell that word from '\(rootWord)")
+            return
+        }
+        guard isReal(word: answer) else {
+            wordError(title: "word not recognized", message: "you cant just make them up, you know!")
+            return
+        }
         
         withAnimation {
             usedWords.insert(answer, at:0)
